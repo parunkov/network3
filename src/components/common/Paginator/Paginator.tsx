@@ -2,7 +2,14 @@ import React, {useState, useEffect} from 'react';
 import styles from './Paginator.module.scss';
 import cn from 'classnames';
 
-const Paginator = ({totalItemsCount, pageSize, currentPage, 
+type PropsType = {
+	totalItemsCount: number
+	pageSize: number
+	currentPage: number
+	onPageChanged: (pageNumber: number) => void
+}
+
+const Paginator: React.FC<PropsType> = ({totalItemsCount, pageSize, currentPage, 
  onPageChanged}) => {
 
 	const DESKTOP_PORTION_SIZE = 10;
@@ -18,7 +25,7 @@ const Paginator = ({totalItemsCount, pageSize, currentPage,
 	const leftPortionPageNumber = (portionNumber - 1) * portionSize + 1;
 	const rightPortionPageNumber = portionNumber * portionSize;
 
-	const onPortionCanged = (portionNumber) => {
+	const onPortionCanged = (portionNumber: number) => {
 		let currentPageNumber = 1;
 		if (portionNumber === 1) {
 			currentPageNumber = 1;
@@ -35,12 +42,12 @@ const Paginator = ({totalItemsCount, pageSize, currentPage,
 	useEffect(() => {
 		setInputValue(currentPage);
 	}, [currentPage]);
-	const onInputChange = (e) => {
+	const onInputChange = (e: any) => {
 		setInputValue(e.currentTarget.value);
 	}
 
 
-	const CurrentPageElement = ({p}) => {
+	const CurrentPageElement = ({p}: any) => {
 		if (!editMode) {
 			return <span className={cn(styles.selectedPage, styles.pageNumber)} onClick={
 				(e) => {setEditMode(true)}
